@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/formvalidation.css">
     <script src="js/jquery-2.1.0.min.js" type="text/javascript" ></script>
     <script src="js/formvalidation.js" type="text/javascript"  ></script>
+    <script src="js/framework/bootstrap-3.3.2.js" type="text/javascript" ></script>
     <script src="js/framework/bootstrap.js" type="text/javascript" ></script>
     <script src="js/language/es_ES.js" type="text/javascript" ></script>
     
@@ -15,7 +16,7 @@
 
 </head>
 <body>
-<h1 align="center"> VALIDACION  DE FORMULARIO </h1>
+<h1 align="center"> VALIDACIÓN  DE FORMULARIO </h1>
 <br>
 
     <div class="container">
@@ -113,6 +114,11 @@ $(document).ready(function() {
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
+        err: {
+            // You can set it to popover
+            // The message then will be shown in Bootstrap popover
+            container: 'popover'
+        },
         fields: {
             firstName: {
                 row: '.col-xs-4',
@@ -193,7 +199,23 @@ $(document).ready(function() {
                 }
             }
         }
-    });
+    })
+ .on('success.form.fv', function(e) {
+            // Prevent form submission
+            e.preventDefault();
+
+            // Get the form instance
+            var $form = $(e.target);
+
+            // Get the FormValidation instance
+            var bv = $form.data('formValidation');
+
+            // Use Ajax to submit form data
+            alert($form.serialize());
+            $.post($form.attr('action'), $form.serialize(), function(result) {
+                
+            }, 'json');
+        });
 });
 </script>  
 </body>
